@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#commnt
+#setup the web servers
 if [ ! -e "/usr/sbin/nginx" ]
 then
         sudo apt-get -y update
