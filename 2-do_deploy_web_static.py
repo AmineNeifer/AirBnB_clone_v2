@@ -54,3 +54,7 @@ def do_deploy(archive_path):
     if not run("ln -s {}/{}/ {}".format(rel, nne, cur)).succeeded:
         return False
     return True
+
+
+if __name__ == "__main__":
+    do_pack()
