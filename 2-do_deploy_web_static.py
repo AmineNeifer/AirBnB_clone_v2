@@ -38,6 +38,6 @@ def do_deploy(archive_path):
     run("mv {} {}".format(what_to_mv, where_to_mv))
     run("rm -rf /data/web_static/releases/{}/web_static".format(nne))
     run("rm -rf /data/web_static/current")
-    run("ln -s /data/web_static/releases/{}/ /data/web_static/current"\
-    .format(nne))
+    run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
+        .format(nne))
     return True
