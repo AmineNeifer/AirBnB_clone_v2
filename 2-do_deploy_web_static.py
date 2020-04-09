@@ -1,14 +1,17 @@
 #!/usr/bin/python3
+"""
+    generates a .tgz archive from webstatic
+    and distributes it to the web servers
+"""
 import fabric
-from fabric.operations import local, run, put, sudo
-from fabric.context_managers import cd
+from fabric.operations import local, run, put, env
 from datetime import datetime
 from os import path
 
 
-fabric.api.env.hosts = ["3.91.44.133", "35.227.49.226"]
-fabric.api.env.user = ["ubuntu"]
-fabric.api.key_filename = "~/.ssh/id_rsa"
+env.hosts = ["3.91.44.133", "35.227.49.226"]
+env.user = ["ubuntu"]
+api.key_filename = "~/.ssh/id_rsa"
 
 
 def do_pack():
