@@ -16,16 +16,15 @@ api.key_filename = "~/.ssh/id_rsa"
 
 def do_pack():
     """ compress web_static files"""
-    try:
-        local("mkdir -p versions")
-        x = str(datetime.now()).split(".")[0].replace(' ', '')
-        x = x.replace('-', '').replace(':', '')
-        path = "versions/web_static_{}".format(x)
-        cmd = "tar -cvzf {}.tgz web_static".format(path)
-        local(cmd)
+
+    local("mkdir -p versions")
+    x = str(datetime.now()).split(".")[0].replace(' ', '')
+    x = x.replace('-', '').replace(':', '')
+    path = "versions/web_static_{}".format(x)
+    cmd = "tar -cvzf {}.tgz web_static".format(path)
+    if local(cmd).succeeded:
         return path
-    except:
-        return None
+    return None
 
 
 def do_deploy(archive_path):
@@ -36,7 +35,8 @@ def do_deploy(archive_path):
     nne = name.split(".")[0]
     rel = "/data/web_static/releases"
     cur = "/data/web_static/current"
-    put(archive_path, "/tmp/{}".format(name))
+    if not put(archive_path, "/tmp/{}".format(name)).succeeded:
+        return False
     if not run("mkdir -p {}/{}/".format(rel, nne)).succeeded:
         return False
     if not run("tar -xzf /tmp/{} -C {}/{}/".format(rel, name, nne)).succeeded:
