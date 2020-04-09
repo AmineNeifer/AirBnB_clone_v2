@@ -31,15 +31,23 @@ def do_deploy(archive_path):
         return False
     name = archive_path.split('/')[1]
     nne = name.split(".")[0]
+    rel = "/data/web_static/releases"
+    cur = "/data/web_static/current"
     put(archive_path, "/tmp/{}".format(name))
-    run("mkdir -p /data/web_static/releases/{}/".format(nne))
-    run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(name, nne))
-    run("rm /tmp/{}".format(name))
-    what_to_mv = "/data/web_static/releases/{}/web_static/*".format(nne)
-    where_to_mv = "/data/web_static/releases/{}/".format(nne)
-    run("mv {} {}".format(what_to_mv, where_to_mv))
-    run("rm -rf /data/web_static/releases/{}/web_static".format(nne))
-    run("rm -rf /data/web_static/current")
-    run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
-        .format(nne))
+    if not run("mkdir -p {}/{}/".format(rel, nne)).succeeded:
+        return False
+    if not run("tar -xzf /tmp/{} -C {}/{}/".format(rel, name, nne)).succeeded:
+        return False
+    if not run("rm /tmp/{}".format(name)).succeeded:
+        return False
+    what_to_mv = "{}/{}/web_static/*".format(rel, nne)
+    where_to_mv = "{}/{}/".format(rel, nne)
+    if not run("mv {} {}".format(what_to_mv, where_to_mv)).succeeded:
+        return False
+    if not run("rm -rf {}/{}/web_static".format(rel, nne)).succeeded:
+        return False
+    if not run("rm -rf /data/web_static/current").succeeded:
+        return False
+    if not run("ln -s {}/{}/ {}".format(rel, nne, cur)).succeeded:
+        return False
     return True
