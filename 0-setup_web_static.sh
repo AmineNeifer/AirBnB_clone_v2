@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#setup the web servers
+#setup the web servers for static web
 if [ ! -e "/usr/sbin/nginx" ]
 then
         sudo apt-get -y update
