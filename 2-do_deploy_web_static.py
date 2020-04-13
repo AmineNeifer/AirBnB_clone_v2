@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-    generates a .tgz archive from webstatic
-    and distributes it to the web servers
+generates a .tgz archive from webstatic
+and distributes it to the web servers
 """
 import fabric
 from fabric.operations import local, run, put, env
@@ -15,8 +15,9 @@ api.key_filename = "~/.ssh/id_rsa"
 
 
 def do_pack():
-    """ compress web_static files"""
-
+    """
+    compress web_static files
+    """
     local("mkdir -p versions")
     x = str(datetime.now()).split(".")[0].replace(' ', '')
     x = x.replace('-', '').replace(':', '')
@@ -28,7 +29,9 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """ distributes archive to web servers"""
+    """
+    distributes archive to web servers
+    """
     if not path.exists(archive_path):
         return False
     name = archive_path.split('/')[1]
@@ -54,7 +57,3 @@ def do_deploy(archive_path):
     if not run("ln -s {}/{}/ {}".format(rel, nne, cur)).succeeded:
         return False
     return True
-
-
-if __name__ == "__main__":
-    do_pack()
