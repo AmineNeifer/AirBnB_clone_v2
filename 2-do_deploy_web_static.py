@@ -1,21 +1,16 @@
 #!/usr/bin/python3
 """
-generates a .tgz archive from webstatic
-and distributes it to the web servers
+Distributing an archive to your web servers, using the function do_deploy.
 """
-import fabric
-from fabric.operations import local, run, put, env
-from datetime import datetime
+from fabric.api import local, lcd, put, env, run
 
 
-env.hosts = ["3.91.44.133", "35.227.49.226"]
-env.user = ["ubuntu"]
-api.key_filename = "~/.ssh/id_rsa"
+env.hosts = ['35.243.129.178', '3.91.29.66']
 
 
 def do_deploy(archive_path):
     """
-    distributes archive to web servers
+    Distributes an archive to your web servers.
     """
     fname = archive_path.split('/')[-1]
     r = put(archive_path, "/tmp/")
