@@ -2,7 +2,9 @@
 """
 Distributing an archive to your web servers, using the function do_deploy.
 """
+import fabric
 from fabric.api import local, lcd, put, env, run
+from datetime import datetime
 
 
 env.hosts = ['35.243.129.178', '3.91.29.66']
