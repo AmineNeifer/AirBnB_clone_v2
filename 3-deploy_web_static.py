@@ -6,10 +6,7 @@ import fabric
 from fabric.api import local, put, env, run
 from datetime import datetime
 
-env.hosts = ["3.91.44.133", "35.227.49.226"]
-env.user = ["ubuntu"]
-ssh.util.log_to_file("paramiko.log", 10)
-count = 0
+env.hosts = ["35.227.49.226"]
 
 
 def do_pack():
@@ -60,10 +57,7 @@ def deploy():
     combining both do_pack and do_deploy
     basically, full deployment
     """
-    global count
-    if count == 0:
-        path = do_pack()
-        count += 1
+    path = do_pack()
     if path is None:
         return False
     return do_deploy(path)
