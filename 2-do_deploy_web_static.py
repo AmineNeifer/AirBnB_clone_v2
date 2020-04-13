@@ -12,21 +12,6 @@ env.hosts = ["3.91.44.133", "35.227.49.226"]
 env.user = ["ubuntu"]
 api.key_filename = "~/.ssh/id_rsa"
 
-
-def do_pack():
-    """
-    compress web_static files
-    """
-    local("mkdir -p versions")
-    x = str(datetime.now()).split(".")[0].replace(' ', '')
-    x = x.replace('-', '').replace(':', '')
-    path = "versions/web_static_{}".format(x)
-    cmd = "tar -cvzf {}.tgz web_static".format(path)
-    if local(cmd).succeeded:
-        return path
-    return None
-
-
 def do_deploy(archive_path):
     """
     distributes archive to web servers
