@@ -6,6 +6,7 @@ import fabric
 from fabric.api import local, put, env, run
 from datetime import datetime
 
+
 env.hosts = ["3.91.44.133", "35.227.49.226"]
 
 
@@ -60,4 +61,5 @@ def deploy():
     path = do_pack()
     if path is None:
         return False
-    return do_deploy(path)
+    arch_path = "{}.tgz".format(path)
+    return do_deploy(arch_path)
