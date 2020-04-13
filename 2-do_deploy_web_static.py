@@ -19,11 +19,11 @@ def do_deploy(archive_path):
     nne = name.split(".")[0]
     rel = "/data/web_static/releases"
     cur = "/data/web_static/current"
-    if not put(archive_path, "/tmp/{}".format(name)).succeeded:
+    if not put(archive_path, "/tmp/").succeeded:
         return False
     if not run("mkdir -p {}/{}/".format(rel, nne)).succeeded:
         return False
-    if not run("tar -xzf /tmp/{} -C {}/{}/".format(rel, name, nne)).succeeded:
+    if not run("tar -xzf /tmp/{} -C {}/{}/".format(name, rel, nne)).succeeded:
         return False
     if not run("rm /tmp/{}".format(name)).succeeded:
         return False
