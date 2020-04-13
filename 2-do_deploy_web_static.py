@@ -15,33 +15,26 @@ def do_deploy(archive_path):
     """
     Distributes an archive to your web servers.
     """
-    fname = archive_path.split('/')[-1]
-    r = put(archive_path, "/tmp/")
-    if r.failed:
+    name = archive_path.split('/')[1]
+    nne = name.split(".")[0]
+    rel = "/data/web_static/releases"
+    cur = "/data/web_static/current"
+    if not put(archive_path, "/tmp/{}".format(name)).succeeded:
         return False
-    path = '/data/web_static/releases/' + fname[:-4]
-    r = run('mkdir -p %s' % path)
-    if r.failed:
+    if not run("mkdir -p {}/{}/".format(rel, nne)).succeeded:
         return False
-    r = run('tar -xzf /tmp/%s -C /data/web_static/releases/%s/' %
-            (fname, fname[:-4]))
-    if r.failed:
+    if not run("tar -xzf /tmp/{} -C {}/{}/".format(rel, name, nne)).succeeded:
         return False
-    r = run('rm /tmp/%s' % fname)
-    if r.failed:
+    if not run("rm /tmp/{}".format(name)).succeeded:
         return False
-    r = run('mv /data/web_static/releases/%s/web_static/*\
-    /data/web_static/releases/%s' % (fname[:-4], fname[:-4]))
-    if r.failed:
+    what_to_mv = "{}/{}/web_static/*".format(rel, nne)
+    where_to_mv = "{}/{}/".format(rel, nne)
+    if not run("mv {} {}".format(what_to_mv, where_to_mv)).succeeded:
         return False
-    r = run('rm -rf /data/web_static/releases/%s/web_static' % fname[:-4])
-    if r.failed:
+    if not run("rm -rf {}/{}/web_static".format(rel, nne)).succeeded:
         return False
-    r = run('rm -rf /data/web_static/current')
-    if r.failed:
+    if not run("rm -rf /data/web_static/current").succeeded:
         return False
-    r = run('ln -s /data/web_static/releases/%s /data/web_static/current'
-            % fname[:-4])
-    if r.failed:
+    if not run("ln -s {}/{}/ {}".format(rel, nne, cur)).succeeded:
         return False
     return True
