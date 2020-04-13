@@ -6,7 +6,6 @@ and distributes it to the web servers
 import fabric
 from fabric.operations import local, run, put, env
 from datetime import datetime
-from os import path
 
 
 env.hosts = ["3.91.44.133", "35.227.49.226"]
@@ -32,8 +31,6 @@ def do_deploy(archive_path):
     """
     distributes archive to web servers
     """
-    if not path.exists(archive_path):
-        return False
     name = archive_path.split('/')[1]
     nne = name.split(".")[0]
     rel = "/data/web_static/releases"
