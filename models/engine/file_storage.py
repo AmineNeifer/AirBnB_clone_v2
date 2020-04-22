@@ -70,3 +70,7 @@ class FileStorage:
             if dic in self.__objects:
                 del self.__objects[dic]
                 self.save()
+
+    def close(self):
+        " deserializing json file to objects"""
+        reload()
