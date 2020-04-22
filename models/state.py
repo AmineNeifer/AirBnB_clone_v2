@@ -22,8 +22,8 @@ class State(BaseModel, Base):
         Getter attribute for cities
         """
         cities = models.storage.all(City)
-        dic = {}
-        for key, value in cities.items():
+        my_list = []
+        for key in cities.items():
             if value.state_id == self.id:
-                dic[key] = value
-        return dic
+                my_list.append(value)
+        return my_list
