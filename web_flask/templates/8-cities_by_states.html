@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>States</H1>
+        <UL>
+            {% for item in all_states %}
+            <LI>{{ item[0][0] }}: <B>{{ item[0][1] }}</B>
+                <UL>
+                {% for case in item[1:] %}
+                    <LI>{{ case[0]}}: <B>{{ case[1] }}</B></LI>
+                {% endfor %}
+                </UL>
+            </LI>
+            {% endfor %}
+        </UL>
+    </BODY>
+</HTML>
