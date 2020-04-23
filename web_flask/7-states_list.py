@@ -14,11 +14,11 @@ def teardown(self):
 def staties():
     states = storage.all(State)
     first = {}
-    last = {}
+    last = []
     for value in states.values():
         first[value.to_dict()["name"]] = value.to_dict()["id"]
     for key, value in sorted(first.items()):
-        last[key] = value
+        last.append((key, value))
     del first
     return render_template("7-states_list.html", all_states=last)
 
