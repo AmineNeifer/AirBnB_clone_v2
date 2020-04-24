@@ -12,17 +12,10 @@ def teardown(self):
 
 @app.route('/cities_by_states', strict_slashes=False)
 def staties():
-    states = storage.all(State)
-    it_state = 0
-    last = []
-    for state in states.values():
-        last.append([[state.to_dict()["id"], state.to_dict()["name"]]])
-        for city in state.cities:
-            cit = city.to_dict()
-            last[it_state].append([cit["id"], cit["name"]])
-        it_state += 1
-
-    return render_template("8-cities_by_states.html", all_states=last)
+    states = []
+    for state in storage.all(State).values():
+        states.append(state)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 if __name__ == "__main__":
